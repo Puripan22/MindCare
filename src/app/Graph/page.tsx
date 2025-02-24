@@ -18,7 +18,7 @@ export default function Graph() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 dark:bg-gray-700">
       <h1 className="text-2xl font-bold mb-6">Graph Visualization</h1>
 
       {/* Input Section */}
@@ -28,14 +28,14 @@ export default function Graph() {
           placeholder="Label (e.g., Day 1)"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-40"
+          className="w-40 dark:bg-gray-600"
         />
         <Input
           type="number"
           placeholder="Value"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="w-40"
+          className="w-40 dark:bg-gray-600"
         />
         <Button onClick={addDataPoint}>Add Data</Button>
       </div>

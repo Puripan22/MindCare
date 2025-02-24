@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,13 +11,18 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter();
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    alert(`Registering with: ${email}`);
+
+    const user = { email, password };
+    localStorage.setItem("user", JSON.stringify(user)); // บันทึกข้อมูลใน localStorage
+    alert("Registration successful!");
+    router.push("/Login"); // ไปหน้า Login
   };
 
   return (

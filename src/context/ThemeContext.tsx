@@ -9,19 +9,27 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState<boolean | null>(null); // ใช้ `null` เพื่อรอค่าเริ่มต้น
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("darkMode") === "true";
-    setDarkMode(savedTheme);
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("darkMode") === "true";
+      setDarkMode(savedTheme);
+      document.documentElement.classList.toggle("dark", savedTheme);
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("darkMode", darkMode.toString());
-    document.documentElement.classList.toggle("dark", darkMode);
+    if (darkMode !== null) {
+      localStorage.setItem("darkMode", darkMode.toString());
+      document.documentElement.classList.toggle("dark", darkMode);
+    }
   }, [darkMode]);
 
   const toggleDarkMode = () => setDarkMode((prev) => !prev);
+
+  // ถ้า darkMode ยังเป็น null ให้แสดง UI ว่างๆไปก่อนเพื่อป้องกัน UI กระพริบ
+  if (darkMode === null) return <div className="h-screen bg-white dark:bg-gray-900" />;
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
