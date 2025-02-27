@@ -14,8 +14,6 @@ export default function Home() {
   const [showInput, setShowInput] = useState(false);
   const [user, setUser] = useState(null);
 
-  
-
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     if (!loggedInUser) {
@@ -41,10 +39,27 @@ export default function Home() {
     }
   }, [entries, user]);
 
-  const addEntry = () => {
+  const predictText = async (text) => {
+    try {
+      console.log("Sending text to Flask:", text);
+      const response = await fetch("http://localhost:5000/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      const data = await response.json();
+      return data.sentiment || "Unknown";
+    } catch (error) {
+      console.error("Prediction error:", error);
+      return "Error";
+    }
+  };
+
+  const addEntry = async () => {
     if (!text.trim()) return;
-    const timestamp = new Date().toLocaleString(); // บันทึกวันที่และเวลา
-    const newEntry = { id: Date.now(), text, timestamp };
+    const sentiment = await predictText(text);
+    const timestamp = new Date().toLocaleString();
+    const newEntry = { id: Date.now(), text, timestamp, sentiment };
     setEntries([newEntry, ...entries]);
     setText("");
     setShowInput(false);
@@ -76,6 +91,7 @@ export default function Home() {
                 <CardContent className="dark:text-white">
                   <p className="text-sm text-gray-400 dark:text-gray-300">{entry.timestamp}</p>
                   <p className="pt-1">{entry.text}</p>
+                  <p className="pt-1 font-bold">Sentiment: {entry.sentiment}</p>
                 </CardContent>
               </Card>
             ))}
