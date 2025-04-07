@@ -41,3 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 /Server/venv/
+/Server/Model/prediction_logs.jsonl
