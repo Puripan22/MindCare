@@ -13,7 +13,7 @@ export default function Navbar() {
   const { darkMode, toggleDarkMode } = useTheme();
   const router = useRouter();
   const [user, setUser] = useState(null);
-  
+
   // ตรวจสอบว่าผู้ใช้ล็อกอินหรือไม่
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -36,11 +36,28 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full p-4 shadow-md dark:bg-gray-800 bg-white z-10 flex justify-between items-center">
       {/* เมนูด้านซ้าย */}
-      <div className="flex space-x-8">
-        <Link href="/" className="text-xl font-semibold dark:text-white">
+      <div className="flex space-x-8 items-center hover:opacity-80 transitio">
+        <Link href="/" className="flex  text-lg italic font-bold  hover:text-blue-600 transition-colors items-center">
+          <img
+            src="/logo1-Photoroom.png"
+            alt="Remind Me"
+            className="h-12 w-auto "
+          />  
+          <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 bg-clip-text text-transparent mt-1">
+          Remind Me
+         </span>
+        </Link>
+       
+        <Link
+          href="/Graph"
+          className="text-lg dark:text-white text-gray-700 hover:text-blue-500 transition"
+        >
           Home
         </Link>
-        <Link href="/Graph" className="text-lg dark:text-white">
+        <Link
+          href="/Graph"
+          className="text-lg dark:text-white text-gray-700 hover:text-blue-500 transition"
+        >
           Graph
         </Link>
       </div>
