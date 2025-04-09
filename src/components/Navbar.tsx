@@ -49,7 +49,7 @@ export default function Navbar() {
         </Link>
        
         <Link
-          href="/Graph"
+          href="/"
           className="text-lg dark:text-white text-gray-700 hover:text-blue-500 transition"
         >
           Home
