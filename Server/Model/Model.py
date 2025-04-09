@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import pickle
 
+
 # โหลด Dataset
 df = pd.read_csv("expanded_sentiment_dataset.csv")
 
